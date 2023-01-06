@@ -1,0 +1,67 @@
+<mat-drawer-container class="example-container">
+    <mat-drawer mode="side" opened>
+        
+        <form class="example-form">
+            <h4 class="font-color">List of Applications</h4>
+            <mat-form-field class="example-full-width" appearance="fill">
+              <mat-label>Application Name</mat-label>
+              <input type="text"
+                     placeholder="Pick one"
+                     aria-label="Application Name"
+                     matInput
+                     [formControl]="applicationName"
+                     [matAutocomplete]="appName">
+              <mat-autocomplete #appName="matAutocomplete" (optionSelected)="onAppNameSelect()">
+                <mat-option *ngFor="let option of filteredOptions | async" [value]="option.applicationName">
+                  {{option.applicationName}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form>
+          
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="p-2">
+            <div class="row mx-1 w-100 payload-height">
+                <div class="col-12 col-md-3 api-list">
+                    <h4 class="font-color">List of APIs</h4>
+                    <form class="example-form">
+                        <mat-form-field class="example-full-width" appearance="fill">
+                          <mat-label>API's</mat-label>
+                          <input type="text"
+                                 placeholder="Pick one"
+                                 aria-label="API"
+                                 matInput
+                                 [formControl]="selectedAPI"
+                                 [matAutocomplete]="api">
+                          <mat-autocomplete #api="matAutocomplete" (optionSelected)="onAPISelected()">
+                            <mat-option *ngFor="let option of filteredAPI | async" [value]="option.apiName">
+                              {{option.apiName}}
+                            </mat-option>
+                          </mat-autocomplete>
+                        </mat-form-field>
+                      </form>
+                </div>
+                <div class="col-12 col-md-9">
+                    <h4 class="font-color">Request Type <span class="text-uppercase">{{requestType}}</span> </h4>
+                    <app-dynamic-form [formControl]="finalForm"></app-dynamic-form>
+                    <button class="btn btn-primary" (click)="checkData()"> Check Data</button>
+                    <mat-form-field class="w-100" appearance="fill">
+                        <textarea rows="13"
+                            placeholder="Payload" matInput [formControl]="payloadData">
+
+                        </textarea>
+                        
+                    </mat-form-field>
+                    <button class="btn btn-primary request-button" (click)="getResponse()"> Make request</button>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-color">
+                    Response : 
+                </h4>
+                {{responseData | json}}
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,5 @@
+<section>
+    <div *ngFor="let field of fields">
+        <ng-template opmrDynamicField [field]="field" (updateValueChange)="updateValueChange($event)"></ng-template>
+    </div>
+</section>
